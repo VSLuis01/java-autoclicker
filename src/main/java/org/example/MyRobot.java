@@ -2,42 +2,51 @@ package org.example;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyRobot extends Robot {
-    Coordinate mousePosition;
+    List<Coordinate> path = new ArrayList<>();
 
-    public MyRobot(Coordinate mousePosition) throws AWTException {
+    public MyRobot() throws AWTException {
         super();
-        this.mousePosition = mousePosition;
     }
 
-    public void click() {
-        this.mouseMove(mousePosition.x(), mousePosition.y());
-
-        // Realiza o clique do mouse
+    private void click() {
         this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-
     }
 
-    public void doubleClick() {
-        this.mouseMove(mousePosition.x(), mousePosition.y());
+    public void simpleClick(Coordinate pos) {
+        this.mouseMove(pos.x(), pos.y());
 
-        this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        this.click();
+    }
 
+    public void doubleClick(Coordinate pos) {
+        this.mouseMove(pos.x(), pos.y());
+
+        this.click();
         this.delay(200);
-
-        this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        this.click();
     }
 
-    @Override
-    public String toString() {
-        return this.mousePosition.toString();
+    public void checkDuel(Color compare) {
+        Color duelPickerColor = this.getPixelColor(2173, 404);
+
+        if (compare.equals(duelPickerColor)) {
+            System.out.println("Duel found");
+            this.mouseMove(2616, 131);
+            this.click();
+            this.delay(200);
+        }
     }
 
-    public void checkDuel() {
-//        this.getPixelColor()
+    public List<Coordinate> getPath() {
+        return path;
+    }
+
+    public void setPath(List<Coordinate> path) {
+        this.path = path;
     }
 }
