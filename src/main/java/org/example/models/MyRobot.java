@@ -1,4 +1,4 @@
-package org.example;
+package org.example.models;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -32,11 +32,11 @@ public class MyRobot extends Robot {
     }
 
     public void checkDuel(Color compare) {
-        Color duelPickerColor = this.getPixelColor(2173, 404);
+        Color duelPickerColor = this.getPixelColor(2991, 411);
 
-        if (compare.equals(duelPickerColor)) {
+        if (!compare.equals(duelPickerColor)) {
             System.out.println("Duel found");
-            this.mouseMove(2616, 131);
+            this.mouseMove(3686, 344);
             this.click();
             this.delay(200);
         }
