@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.controllers.KeyboardControl;
 import org.example.enums.Command;
+import org.example.ui.UI;
 
 import java.awt.*;
 
