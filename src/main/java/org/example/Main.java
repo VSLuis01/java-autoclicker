@@ -1,46 +1,13 @@
 package org.example;
 
-import org.example.controllers.KeyboardControl;
-import org.example.enums.Command;
-import org.example.ui.UI;
-
 import java.awt.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, AWTException {
-        KeyboardControl keyboardControl = new KeyboardControl();
 
-        boolean running = true;
-        boolean autoClicking = false;
+        AutoClick.run();
 
-        System.out.println("Aguardando comandos do teclado...");
-        UI.showCommands();
 
-        while (running) {
-            Command command = keyboardControl.getCommand();
-
-            if (command != null) {
-                switch (command) {
-                    case CONFIG -> System.out.println("Entrando no modo de configuração...");
-                    case END_CONFIG -> System.out.println("Finalizando o modo de configuração...");
-                    case START -> {
-                        autoClicking = true;
-                        System.out.println("Iniciando os autocliques...");
-                    }
-                    case STOP -> {
-                        autoClicking = false;
-                        System.out.println("Pausando os autocliques...");
-                    }
-                    case EXIT -> {
-                        running = false;
-                        System.out.println("Saindo do programa...");
-                        keyboardControl.shutdown(); // Remove o hook global
-                    }
-                }
-
-                keyboardControl.clearCommand();
-            }
-        }
 
         /*List<Coordinate> path = List.of(
                 //Coordinate.of(2014, 154),

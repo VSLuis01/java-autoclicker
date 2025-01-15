@@ -3,10 +3,10 @@ package org.example.controllers;
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
-import org.example.enums.Command;
+import org.example.enums.ProgramStatus;
 
 public class KeyboardControl implements NativeKeyListener {
-    private Command command;
+    private ProgramStatus userCommand;
 
     public KeyboardControl() {
         try {
@@ -24,22 +24,21 @@ public class KeyboardControl implements NativeKeyListener {
         // Verifica se o modificador ALT está pressionado
         if ((modifiers & NativeKeyEvent.ALT_MASK) != 0) {
             switch (e.getKeyCode()) {
-                case NativeKeyEvent.VC_J -> this.command = Command.CONFIG;      // ALT + J
-                case NativeKeyEvent.VC_A -> this.command = Command.END_CONFIG;  // ALT + A
-                case NativeKeyEvent.VC_R -> this.command = Command.START;       // ALT + R
-                case NativeKeyEvent.VC_P -> this.command = Command.STOP;        // ALT + P
+                case NativeKeyEvent.VC_J -> this.userCommand = ProgramStatus.CONFIGURING;      // ALT + J
+                case NativeKeyEvent.VC_R -> this.userCommand = ProgramStatus.RUNNING;       // ALT + R
+                case NativeKeyEvent.VC_P -> this.userCommand = ProgramStatus.PAUSED;        // ALT + P
             }
         } else if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
-            this.command = Command.EXIT; // ESC
+            this.userCommand = ProgramStatus.EXITING; // ESC
         }
     }
 
-    public Command getCommand() {
-        return this.command;
+    public ProgramStatus getUserCommand() {
+        return this.userCommand;
     }
 
     public void clearCommand() {
-        this.command = null;
+        this.userCommand = null;
     }
 
     public void shutdown() {
